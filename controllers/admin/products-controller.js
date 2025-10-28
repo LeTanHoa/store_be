@@ -13,7 +13,7 @@ const handleImageUpload = async (req, res) => {
 
     res.json({
       success: true,
-      images: results.map((r) => r.secure_url), // trả về list url
+      images: results.map((r) => r.secure_url),
     });
   } catch (error) {
     console.log(error);
@@ -35,8 +35,6 @@ const addProduct = async (req, res) => {
       totalStock,
       averageReview,
     } = req.body;
-
-    console.log(averageReview, "averageReview");
 
     const newlyCreatedProduct = new Product({
       images,
