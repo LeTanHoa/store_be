@@ -122,7 +122,7 @@ router.post("/send-mail-order-success", async (req, res) => {
 
   // Lấy thông tin đơn hàng thực tế (vì data có chứa { success, data })
   const order = data?.data || data;
-
+  console.log("order", order);
   if (!order || !email) {
     return res.status(400).json({
       success: false,

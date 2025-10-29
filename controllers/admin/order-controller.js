@@ -68,7 +68,7 @@ const updateOrderStatus = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Order status is updated successfully!",
+      message: "Cập nhật thành công!",
     });
   } catch (e) {
     console.log(e);
