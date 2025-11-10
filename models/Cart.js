@@ -19,6 +19,9 @@ const CartSchema = new mongoose.Schema(
           required: true,
           min: 1,
         },
+        capacity: {
+          type: String,
+        },
       },
     ],
   },

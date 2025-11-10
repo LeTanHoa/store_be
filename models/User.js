@@ -18,6 +18,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  otp: {
+    type: String,
+    default: null,
+  },
+  otpExpires: {
+    type: Date,
+    default: null,
+  },
 });
 
 const User = mongoose.model("User", UserSchema);

@@ -11,8 +11,8 @@ const ProductSchema = new mongoose.Schema(
     salePrice: Number,
     totalStock: Number,
     averageReview: Number,
+    capacities: [String],
   },
   { timestamps: true }
 );
-
 module.exports = mongoose.model("Product", ProductSchema);

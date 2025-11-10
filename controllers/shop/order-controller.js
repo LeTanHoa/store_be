@@ -19,6 +19,7 @@ const createOrder = async (req, res) => {
       paymentMethod,
       totalAmount,
     } = req.body;
+    console.log("cartItems", cartItems);
 
     if (!paymentMethod) {
       return res
@@ -43,7 +44,17 @@ const createOrder = async (req, res) => {
       });
 
       await newOrder.save();
-      // delete cart
+
+      for (const item of cartItems) {
+        const product = await Product.findById(item.productId);
+        if (product) {
+          const newStock = Math.max(product.totalStock - item.quantity, 0);
+          await Product.findByIdAndUpdate(item.productId, {
+            totalStock: newStock,
+          });
+        }
+      }
+
       if (cartId) await Cart.findByIdAndDelete(cartId);
 
       return res.status(201).json({
@@ -52,6 +63,7 @@ const createOrder = async (req, res) => {
         orderId: newOrder._id,
       });
     }
+
     // ----------------- PayPal -----------------
     if (String(paymentMethod).toLowerCase() === "paypal") {
       // build create_payment_json
@@ -61,11 +73,11 @@ const createOrder = async (req, res) => {
         redirect_urls: {
           // return_url should point to a frontend route that reads query params (paymentId, PayerID)
           // and then calls backend capture endpoint with orderId stored in sessionStorage
-          // return_url: "http://localhost:5173/shop/paypal-return",
-          // cancel_url: "http://localhost:5173/shop/paypal-cancel",
+          return_url: "http://localhost:5173/shop/paypal-return",
+          cancel_url: "http://localhost:5173/shop/home",
 
-          return_url: "https://storeshop-silk.vercel.app/shop/paypal-return",
-          cancel_url: "https://storeshop-silk.vercel.app/shop/paypal-cancel",
+          // return_url: "https://storeshop-silk.vercel.app/shop/paypal-return",
+          // cancel_url: "https://storeshop-silk.vercel.app/shop/paypal-cancel",
         },
         transactions: [
           {

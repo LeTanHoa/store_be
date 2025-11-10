@@ -7,6 +7,8 @@ const adminProductsRouter = require("./routes/admin/products-routes");
 const adminOrderRouter = require("./routes/admin/order-routes");
 const adminUserRouter = require("./routes/admin/user-routes");
 
+const saleRoutes = require("./routes/shop/sale-routes");
+
 const shopProductsRouter = require("./routes/shop/products-routes");
 const shopCartRouter = require("./routes/shop/cart-routes");
 const shopAddressRouter = require("./routes/shop/address-routes");
@@ -16,9 +18,13 @@ const shopReviewRouter = require("./routes/shop/review-routes");
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const emailRoute = require("./routes/email/send-email");
 mongoose
+  // .connect(
+  //   "mongodb+srv://huynhcode:huynh23082002@cluster0.nau4m.mongodb.net/?appName=Cluster0"
+  // )
   .connect(
     "mongodb+srv://a:123123123@cluster0.936ifar.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
   )
+
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
 
@@ -47,6 +53,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
 app.use("/api/admin/orders", adminOrderRouter);
 app.use("/api/admin/users", adminUserRouter);
+
+app.use("/api/admin/sales", saleRoutes);
 
 app.use("/api/shop/products", shopProductsRouter);
 app.use("/api/shop/cart", shopCartRouter);
